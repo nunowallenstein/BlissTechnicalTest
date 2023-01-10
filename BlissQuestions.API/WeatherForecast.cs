@@ -1,4 +1,6 @@
-namespace BlissWebAPI
+using System;
+
+namespace BlissQuestions.API
 {
     public class WeatherForecast
     {

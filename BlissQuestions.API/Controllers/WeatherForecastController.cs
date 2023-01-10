@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace BlissWebAPI.Controllers
+namespace BlissQuestions.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

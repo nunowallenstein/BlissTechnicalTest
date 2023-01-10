@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:33628",
-      "sslPort": 44374
+      "applicationUrl": "http://localhost:63703",
+      "sslPort": 44385
     }
   },
   "profiles": {
-    "BlissWebAPI": {
+    "BlissQuestions.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7283;http://localhost:5225",
+      "applicationUrl": "https://localhost:7240;http://localhost:5164",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
