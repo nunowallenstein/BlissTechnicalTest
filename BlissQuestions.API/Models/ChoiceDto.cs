@@ -1,22 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlissQuestions.API.Models
 {
     public class ChoiceDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You should provide a name value.")]
         public string? Choice { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You should provide the number of votes for the choiceue.")]
         public int Votes { get; set; }
-
-        [ForeignKey("QuestionId")]
-        public QuestionDto? Question {get;set;}
-
-        public int QuestionId { get; set; }
     }
 }

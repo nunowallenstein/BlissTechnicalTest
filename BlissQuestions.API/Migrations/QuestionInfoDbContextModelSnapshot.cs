@@ -17,7 +17,7 @@ namespace BlissQuestions.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
 
-            modelBuilder.Entity("BlissQuestions.API.Models.ChoiceDto", b =>
+            modelBuilder.Entity("BlissQuestions.API.Models.ChoiceEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -322,7 +322,7 @@ namespace BlissQuestions.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BlissQuestions.API.Models.QuestionDto", b =>
+            modelBuilder.Entity("BlissQuestions.API.Models.QuestionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -428,9 +428,9 @@ namespace BlissQuestions.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BlissQuestions.API.Models.ChoiceDto", b =>
+            modelBuilder.Entity("BlissQuestions.API.Models.ChoiceEntity", b =>
                 {
-                    b.HasOne("BlissQuestions.API.Models.QuestionDto", "Question")
+                    b.HasOne("BlissQuestions.API.Models.QuestionEntity", "Question")
                         .WithMany("Choices")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,7 +439,7 @@ namespace BlissQuestions.API.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("BlissQuestions.API.Models.QuestionDto", b =>
+            modelBuilder.Entity("BlissQuestions.API.Models.QuestionEntity", b =>
                 {
                     b.Navigation("Choices");
                 });
