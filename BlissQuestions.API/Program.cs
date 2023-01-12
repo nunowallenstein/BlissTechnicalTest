@@ -1,9 +1,14 @@
 using BlissQuestions.API.DbContexts;
+using BlissQuestions.API.Repositories;
+using BlissQuestions.API.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace BlissQuestions.API
 {
@@ -15,14 +20,21 @@ namespace BlissQuestions.API
 
             // Add services to the container.
 
-            builder.Services.AddControllers(options => options.ReturnHttpNotAcceptable = true).AddNewtonsoftJson();
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                x.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 
-             builder.Services.AddDbContext<QuestionInfoDbContext>(options =>options.UseSqlite(builder.Configuration["ConnectionStrings:QuestionsDBConnectionString"]));
-    
-             var app = builder.Build();
+            builder.Services.AddDbContext<QuestionInfoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:QuestionsDBConnectionString"]));
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -4,9 +4,8 @@ using System;
 
 namespace BlissQuestions.API.Models
 {
-    public class QuestionDto
+    public class QuestionForCreationDto
     {
-        public int Id { get; set; }
         public string? ImageUrl { get; set; }
 
         public string? ThumbUrl { get; set; }
@@ -17,5 +16,6 @@ namespace BlissQuestions.API.Models
         public DateTime PublishedAt { get; set; }
 
         public ICollection<ChoiceDto> Choices { get; set; } = new List<ChoiceDto>();
+
     }
 }

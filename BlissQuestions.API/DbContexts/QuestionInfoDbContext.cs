@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using BlissQuestions.API.Models;
+using BlissQuestions.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlissQuestions.API.DbContexts
@@ -9,9 +9,9 @@ namespace BlissQuestions.API.DbContexts
     public class QuestionInfoDbContext : DbContext
     {
 
-        public DbSet<QuestionDto> Questions { get; set; } = null!;
+        public DbSet<QuestionEntity> Questions { get; set; } = null!;
 
-        public DbSet<ChoiceDto> Choices { get; set; } = null!;
+        public DbSet<ChoiceEntity> Choices { get; set; } = null!;
 
         public QuestionInfoDbContext(DbContextOptions<QuestionInfoDbContext> options) : base(options)
         {
@@ -19,17 +19,17 @@ namespace BlissQuestions.API.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<QuestionDto>().HasData(CreateQuestionData());
-            modelBuilder.Entity<ChoiceDto>().HasData(CreateChoiceData());
+            modelBuilder.Entity<QuestionEntity>().HasData(CreateQuestionData());
+            modelBuilder.Entity<ChoiceEntity>().HasData(CreateChoiceData());
             base.OnModelCreating(modelBuilder);
         }
 
-        private QuestionDto[] CreateQuestionData()
+        private QuestionEntity[] CreateQuestionData()
         {
-            var res = new List<QuestionDto>();
+            var res = new List<QuestionEntity>();
             for (int i = 1; i <= 10; i++)
             {
-                res.Add(new QuestionDto()
+                res.Add(new QuestionEntity()
                 {
                     Id = i,
                     ImageUrl = @"https://dummyimage.com/600x400/000/fff.png&text=question+1+image+(600x400)",
@@ -40,13 +40,13 @@ namespace BlissQuestions.API.DbContexts
             }
             return res.ToArray();
         }
-        private ChoiceDto[] CreateChoiceData()
+        private ChoiceEntity[] CreateChoiceData()
         {
-            var res = new List<ChoiceDto>();
+            var res = new List<ChoiceEntity>();
             int id = 1;
             for (int i = 1; i <= 10; i++)
             {
-                res.Add(new ChoiceDto()
+                res.Add(new ChoiceEntity()
                 {
                     Id = id,
                     QuestionId = i,
@@ -54,7 +54,7 @@ namespace BlissQuestions.API.DbContexts
                     Votes = 2048
                 });
                 id++;
-                res.Add(new ChoiceDto()
+                res.Add(new ChoiceEntity()
                 {
                     Id = id,
                     QuestionId = i,
@@ -62,7 +62,7 @@ namespace BlissQuestions.API.DbContexts
                     Votes = 1024
                 });
                 id++;
-                res.Add(new ChoiceDto()
+                res.Add(new ChoiceEntity()
                 {
                     Id = id,
                     QuestionId = i,
@@ -70,7 +70,7 @@ namespace BlissQuestions.API.DbContexts
                     Votes = 512
                 });
                 id++;
-                res.Add(new ChoiceDto()
+                res.Add(new ChoiceEntity()
                 {
                     Id = id,
                     QuestionId = i,
