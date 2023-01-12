@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BlissQuestions.API.Repositories
+namespace BlissQuestions.API.Services
 {
     public interface IQuestionsRepository
     {

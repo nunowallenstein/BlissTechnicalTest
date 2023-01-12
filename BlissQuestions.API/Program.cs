@@ -1,5 +1,4 @@
 using BlissQuestions.API.DbContexts;
-using BlissQuestions.API.Repositories;
 using BlissQuestions.API.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using BlissQuestions.API.Services;
 
 namespace BlissQuestions.API
 {
@@ -31,6 +32,7 @@ namespace BlissQuestions.API
             builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 
             builder.Services.AddDbContext<QuestionInfoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:QuestionsDBConnectionString"]));
+            builder.Services.AddHealthChecks().AddDbContextCheck<QuestionInfoDbContext>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -45,11 +47,13 @@ namespace BlissQuestions.API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseRouting();
 
-
-            app.MapControllers();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("api/health");
+                endpoints.MapControllers();
+            });
             app.Run();
         }
     }
