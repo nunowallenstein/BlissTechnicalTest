@@ -2,7 +2,7 @@
 using BlissQuestions.API.DbContexts;
 using BlissQuestions.API.Entities;
 using BlissQuestions.API.Models;
-using BlissQuestions.API.Repositories;
+using BlissQuestions.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -48,6 +48,10 @@ namespace BlissQuestions.API.Controllers
         [HttpPost]
         public async Task<ActionResult<QuestionDto>> AddQuestion(QuestionForCreationDto questionForCreation)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new HealthDto() { Status= "Bad request. All fields are mandatory" });
+            }
             var questionEntity = _mapper.Map<QuestionEntity>(questionForCreation);
             _questionsRepository.AddQuestion(questionEntity);
           //  questionEntity.PublishedAt = DateTime.Now;
@@ -58,6 +62,10 @@ namespace BlissQuestions.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<QuestionDto>> UpdateQuestion(int id, QuestionForCreationDto questionToUpdate)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new HealthDto() { Status = "Bad request. All fields are mandatory" });
+            }
             if (!await _questionsRepository.HasQuestionAsync(id))
             {
                 return NotFound();
