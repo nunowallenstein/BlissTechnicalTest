@@ -6,6 +6,6 @@ namespace BlissQuestions.API.Models
     public class ChoiceDto
     {
         public string? Choice { get; set; }
-        public int Votes { get; set; }
+        public int? Votes { get; set; }
     }
 }
