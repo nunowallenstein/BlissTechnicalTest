@@ -3,6 +3,8 @@ using BlissQuestions.API.DbContexts;
 using BlissQuestions.API.Entities;
 using BlissQuestions.API.Models;
 using BlissQuestions.API.Services;
+using BlissQuestions.API.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,10 +21,12 @@ namespace BlissQuestions.API.Controllers
     {
         private readonly IQuestionsRepository _questionsRepository;
         private readonly IMapper _mapper;
-        public QuestionsController(IQuestionsRepository questionsRepository, IMapper mapper)
+        private readonly IValidator<QuestionForCreationDto> _validator;
+        public QuestionsController(IQuestionsRepository questionsRepository, IMapper mapper, IValidator<QuestionForCreationDto> validator)
         {
             _questionsRepository = questionsRepository;
             _mapper = mapper;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -48,13 +52,14 @@ namespace BlissQuestions.API.Controllers
         [HttpPost]
         public async Task<ActionResult<QuestionDto>> AddQuestion(QuestionForCreationDto questionForCreation)
         {
-            if (!ModelState.IsValid)
+
+            var validationResult = _validator.Validate(questionForCreation);
+            if (!validationResult.IsValid)
             {
-                return BadRequest(new HealthDto() { Status= "Bad request. All fields are mandatory" });
+                return BadRequest(new StatusDto() { Status= "Bad request. All fields are mandatory" });
             }
             var questionEntity = _mapper.Map<QuestionEntity>(questionForCreation);
             _questionsRepository.AddQuestion(questionEntity);
-          //  questionEntity.PublishedAt = DateTime.Now;
             await _questionsRepository.SaveChangesAsync();
             return CreatedAtRoute("GetQuestion", new { questionEntity.Id }, _mapper.Map<QuestionDto>(questionEntity));
         }
@@ -62,9 +67,10 @@ namespace BlissQuestions.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<QuestionDto>> UpdateQuestion(int id, QuestionForCreationDto questionToUpdate)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _validator.Validate(questionToUpdate);
+            if (!validationResult.IsValid)
             {
-                return BadRequest(new HealthDto() { Status = "Bad request. All fields are mandatory" });
+                return BadRequest(new StatusDto() { Status = "Bad request. All fields are mandatory" });
             }
             if (!await _questionsRepository.HasQuestionAsync(id))
             {

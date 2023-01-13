@@ -10,6 +10,8 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using BlissQuestions.API.Services;
+using FluentValidation;
+using BlissQuestions.API.Validators;
 
 namespace BlissQuestions.API
 {
@@ -30,10 +32,10 @@ namespace BlissQuestions.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
-
+            builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddDbContext<QuestionInfoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:QuestionsDBConnectionString"]));
             builder.Services.AddHealthChecks().AddDbContextCheck<QuestionInfoDbContext>();
-
+            builder.Services.AddValidatorsFromAssemblyContaining<QuestionValidator>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
