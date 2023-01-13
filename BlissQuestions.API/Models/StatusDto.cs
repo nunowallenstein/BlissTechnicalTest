@@ -1,6 +1,6 @@
 ﻿namespace BlissQuestions.API.Models
 {
-    public class HealthDto
+    public class StatusDto
     {
         public string? Status {get;set;}
     }

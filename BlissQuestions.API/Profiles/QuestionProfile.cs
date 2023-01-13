@@ -9,7 +9,7 @@ namespace BlissQuestions.API.Profiles
     {
         public QuestionProfile() 
         {
-            CreateMap<QuestionForCreationDto, QuestionEntity>().ForMember(dest=>dest.PublishedAt,opts=>opts.MapFrom(src=>src.PublishedAt==default?DateTime.UtcNow:src.PublishedAt));
+            CreateMap<QuestionForCreationDto, QuestionEntity>();
             CreateMap<QuestionEntity, QuestionDto>();
         }
     }

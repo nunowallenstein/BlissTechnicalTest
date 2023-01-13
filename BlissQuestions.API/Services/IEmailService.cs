@@ -5,6 +5,6 @@ namespace BlissQuestions.API.Services
 {
     public interface IEmailService
     {
-        Task ShareContent(ShareContentDto shareContent);
+        Task SendEmail(ShareContentDto shareContent);
     }
 }

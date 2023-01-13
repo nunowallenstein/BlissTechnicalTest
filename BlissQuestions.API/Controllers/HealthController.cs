@@ -26,7 +26,7 @@ namespace BlissQuestions.API.Controllers
         public async Task<IActionResult> Get()
         {
             var report = await _healthCheckService.CheckHealthAsync();
-            var healthResponse = new HealthDto();
+            var healthResponse = new StatusDto();
             if (report.Status == HealthStatus.Healthy)
             {
                 healthResponse.Status = "OK";
