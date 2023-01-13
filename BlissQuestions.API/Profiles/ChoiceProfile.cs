@@ -9,7 +9,8 @@ namespace BlissQuestions.API.Profiles
         public ChoiceProfile()
         {
             CreateMap<ChoiceDto, ChoiceEntity>().ReverseMap();
-            CreateMap<string, ChoiceEntity>().ForMember(dest=>dest.Choice,opts=>opts.MapFrom(x=>x));
+            CreateMap<string, ChoiceEntity>().ForMember(dest => dest.Choice, opts => opts.MapFrom(x => x))
+                                             .ForMember(dest => dest.Votes, opts => opts.MapFrom(x => 0));
         }
     }
 }
