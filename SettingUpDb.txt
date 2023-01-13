@@ -1,6 +1,0 @@
-Im going to use sqlite database with entity framework core code first
-
-To do this, I'm gonna install the package of sqlite, add the db context on the program service collection and then do add migration on the package manager console of visual studio
-
-
-I installed EFCore.Sqlite package and EFCore.Tools package
