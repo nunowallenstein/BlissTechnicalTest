@@ -18,7 +18,7 @@ If you open it via Visual Studio, the swagger api documentation will be automati
 
 This project was created using EntityFramework with an sqlite database. If you wish to recreate the database with your data you should:
 
-1.Erase the "QuestionsInfo.db" existing on root of the solution folder and the files contained on the "Migrations" folder
+1.Delete the "QuestionsInfo.db" existing on the solution folder and the files contained on the "Migrations" folder
 
 2.Modify the class "QuestionsInfoDbContext.cs" to your appeal regarding the OnModelCreating virtual method to create your data populating the Choices and Question tables
 
