@@ -11,7 +11,7 @@ namespace BlissQuestions.API.Models
         public string? Question { get; set; }
 
         public DateTime PublishedAt { get; set; }
-        public ICollection<ChoiceDto> Choices { get; set; } = new List<ChoiceDto>();
+        public ICollection<string> Choices { get; set; } = new List<string>();
 
     }
 }

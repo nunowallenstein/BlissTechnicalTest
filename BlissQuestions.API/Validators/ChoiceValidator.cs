@@ -8,7 +8,7 @@ namespace BlissQuestions.API.Validators
         public ChoiceValidator() 
         {
             RuleFor(choice=>choice.Choice).NotNull().NotEmpty();
-            RuleFor(choice => choice.Votes).NotNull().NotEmpty();
+            RuleFor(choice => choice.Votes).NotNull();
         }
     }
 }

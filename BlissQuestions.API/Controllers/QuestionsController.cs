@@ -21,12 +21,14 @@ namespace BlissQuestions.API.Controllers
     {
         private readonly IQuestionsRepository _questionsRepository;
         private readonly IMapper _mapper;
-        private readonly IValidator<QuestionForCreationDto> _validator;
-        public QuestionsController(IQuestionsRepository questionsRepository, IMapper mapper, IValidator<QuestionForCreationDto> validator)
+        private readonly IValidator<QuestionForUpdateDto> _validatorUpdate;
+        private readonly IValidator<QuestionForCreationDto> _validatorCreation;
+        public QuestionsController(IQuestionsRepository questionsRepository, IMapper mapper, IValidator<QuestionForUpdateDto> validatorUpdate, IValidator<QuestionForCreationDto> validatorCreation)
         {
             _questionsRepository = questionsRepository;
             _mapper = mapper;
-            _validator = validator;
+            _validatorUpdate = validatorUpdate;
+            _validatorCreation = validatorCreation;
         }
 
         [HttpGet]
@@ -53,7 +55,7 @@ namespace BlissQuestions.API.Controllers
         public async Task<ActionResult<QuestionDto>> AddQuestion(QuestionForCreationDto questionForCreation)
         {
 
-            var validationResult = _validator.Validate(questionForCreation);
+            var validationResult = _validatorCreation.Validate(questionForCreation);
             if (!validationResult.IsValid)
             {
                 return BadRequest(new StatusDto() { Status= "Bad request. All fields are mandatory" });
@@ -65,9 +67,9 @@ namespace BlissQuestions.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<QuestionDto>> UpdateQuestion(int id, QuestionForCreationDto questionToUpdate)
+        public async Task<ActionResult<QuestionDto>> UpdateQuestion(int id, QuestionForUpdateDto questionToUpdate)
         {
-            var validationResult = _validator.Validate(questionToUpdate);
+            var validationResult = _validatorUpdate.Validate(questionToUpdate);
             if (!validationResult.IsValid)
             {
                 return BadRequest(new StatusDto() { Status = "Bad request. All fields are mandatory" });
