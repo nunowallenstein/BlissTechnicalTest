@@ -35,7 +35,8 @@ namespace BlissQuestions.API
             builder.Services.AddSingleton<IEmailService, EmailService>();
             builder.Services.AddDbContext<QuestionInfoDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:QuestionsDBConnectionString"]));
             builder.Services.AddHealthChecks().AddDbContextCheck<QuestionInfoDbContext>();
-            builder.Services.AddValidatorsFromAssemblyContaining<QuestionValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<QuestionForUpdateValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<QuestionForCreationValidator>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();

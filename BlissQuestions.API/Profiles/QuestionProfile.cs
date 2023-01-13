@@ -9,8 +9,9 @@ namespace BlissQuestions.API.Profiles
     {
         public QuestionProfile() 
         {
-            CreateMap<QuestionForCreationDto, QuestionEntity>();
+            CreateMap<QuestionForUpdateDto, QuestionEntity>();
             CreateMap<QuestionEntity, QuestionDto>();
+            CreateMap<QuestionForCreationDto, QuestionEntity>();
         }
     }
 }
