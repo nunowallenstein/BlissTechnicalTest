@@ -10,6 +10,7 @@ namespace BlissQuestions.API.Validators
         {
             RuleFor(question => question.Question).NotNull().NotEmpty();
             RuleFor(question => question.PublishedAt).NotNull().NotEmpty();
+            RuleFor(question => question.Choices).NotNull().NotEmpty();
             RuleForEach(question => question.Choices).SetValidator(new ChoiceValidator());
             RuleFor(question => question.ImageUrl).NotNull().NotEmpty();
             RuleFor(question => question.ThumbUrl).NotNull().NotEmpty();
